@@ -16,9 +16,7 @@ window.onload = function() {
     var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
     function preload()
-    {
-        game.load.image( 'logo', 'assets/phaser.png' );
-        
+    {   
         game.load.image('darkness', 'assets/pics/darkness.jpg');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         
@@ -28,6 +26,7 @@ window.onload = function() {
     var player;
     var background;
     var rain;
+    var raindrop;
     
     var theme
     
@@ -39,28 +38,15 @@ window.onload = function() {
         // Enable Arcade Physics
         game.physics.startSystem(Phaser.Physics.ARCADE);
         
-        // Player
-        player = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
-        player.anchor.setTo( 0.5, 0.5 );
-        
-        // Turn on the arcade physics engine for this sprite.
-        game.physics.enable( player, Phaser.Physics.ARCADE );
-        // Make it bounce off of the world bounds.
-        player.body.collideWorldBounds = true;
-        
         // Rain
         rain = game.add.group();
-        game.physics.enable(rain, Phaser.Physics.ARCADE);
         
-        // Adds Rain
-        for (var i = 0; i < 7; i++)
-        {
-            // Adds Raindrop
-            var raindrop = rain.create(i * 50, 0, 'raindrop');
-            
-            // Raindrop falls
-            raindrop.body.gravity.y = 300;
-        }
+        // Rain Physics Enable
+        rain.enableBody = true;
+        
+        // Raindrop
+        raindrop = rain.create(60, 0, 'raindrop');
+        raindrop.body.gravity.y = 500;
         
         // Music
         theme = game.add.audio('theme');
@@ -69,11 +55,12 @@ window.onload = function() {
     
     function update()
     {
-        // Accelerate the 'logo' sprite towards the cursor,
-        // accelerating at 500 pixels/second and moving no faster than 500 pixels/second
-        // in X or Y.
-        // This function returns the rotation angle that makes it visually match its
-        // new trajectory.
-        player.rotation = game.physics.arcade.accelerateToPointer( player, this.game.input.activePointer, 500, 500, 500 );
+        // Adds Rain    
+        if (raindrop.y > game.world.centerY)
+        {
+            // Raindrop
+            raindrop = rain.create(60, 0, 'raindrop');
+            raindrop.body.gravity.y = 500;
+        }
     }
 };
