@@ -26,7 +26,9 @@ window.onload = function() {
     var player;
     var background;
     var rain;
-    var raindrop;
+    var raindrop1;
+    var raindrop2;
+    var raindrop3;
     
     var theme
     
@@ -45,8 +47,12 @@ window.onload = function() {
         rain.enableBody = true;
         
         // Raindrop
-        raindrop = rain.create(60, 0, 'raindrop');
-        raindrop.body.gravity.y = 500;
+        raindrop1 = rain.create(60, 0, 'raindrop');
+        raindrop1.body.gravity.y = 2000;
+        raindrop2 = rain.create(660, 0, 'raindrop');
+        raindrop2.body.gravity.y = 1000;
+        raindrop3 = rain.create(420, 0, 'raindrop');
+        raindrop3.body.gravity.y = 500;
         
         // Music
         theme = game.add.audio('theme');
@@ -55,12 +61,23 @@ window.onload = function() {
     
     function update()
     {
+        var randNum = game.rnd.realInRange(0, 14);
+        
         // Adds Rain    
-        if (raindrop.y > game.world.centerY)
+        if (raindrop1.y > game.world.centerY)
         {
-            // Raindrop
-            raindrop = rain.create(60, 0, 'raindrop');
-            raindrop.body.gravity.y = 500;
+            raindrop1 = rain.create(randNum * 60, 0, 'raindrop');
+            raindrop1.body.gravity.y = 2000;
+        }
+        if (raindrop2.y > game.world.centerY)
+        {
+            raindrop2 = rain.create(randNum * 60, 0, 'raindrop');
+            raindrop2.body.gravity.y = 1000;
+        }
+        if (raindrop3.y > game.world.centerY)
+        {
+            raindrop3 = rain.create(randNum * 60, 0, 'raindrop');
+            raindrop3.body.gravity.y = 500;
         }
     }
 };
