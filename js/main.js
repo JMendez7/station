@@ -34,7 +34,6 @@ window.onload = function() {
         
         // Adds Rain
         raindrop = game.add.sprite(0, 0, 'raindrop');
-        raindrop.scale.setTo(1,1);
         
         // Create a sprite at the center of the screen using the 'logo' image.
         player = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
@@ -46,15 +45,10 @@ window.onload = function() {
         game.physics.enable( player, Phaser.Physics.ARCADE );
         // Make it bounce off of the world bounds.
         player.body.collideWorldBounds = true;
-        
-        // Add some text using a CSS style.
-        // Center it in X, and position its top 15 pixels from the top of the world.
-        var style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
-        var text = game.add.text( game.world.centerX, 15, "Build something awesome.", style );
-        text.anchor.setTo( 0.5, 0.0 );
     }
     
-    function update() {
+    function update()
+    {
         // Accelerate the 'logo' sprite towards the cursor,
         // accelerating at 500 pixels/second and moving no faster than 500 pixels/second
         // in X or Y.
