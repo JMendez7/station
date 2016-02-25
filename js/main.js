@@ -21,30 +21,50 @@ window.onload = function() {
         
         game.load.image('darkness', 'assets/pics/darkness.jpg');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
+        
+        game.load.audio('theme', 'assets/audio/Here We Are.mp3');
     }
     
     var player;
     var background;
-    var raindrop;
+    var rain;
+    
+    var theme
     
     function create()
     {
         // Background
         background = game.add.image(0, 0, 'darkness');
         
-        // Adds Rain
-        raindrop = game.add.sprite(0, 0, 'raindrop');
+        // Enable Arcade Physics
+        game.physics.startSystem(Phaser.Physics.ARCADE);
         
-        // Create a sprite at the center of the screen using the 'logo' image.
+        // Player
         player = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
-        // Anchor the sprite at its center, as opposed to its top-left corner.
-        // so it will be truly centered.
         player.anchor.setTo( 0.5, 0.5 );
         
         // Turn on the arcade physics engine for this sprite.
         game.physics.enable( player, Phaser.Physics.ARCADE );
         // Make it bounce off of the world bounds.
         player.body.collideWorldBounds = true;
+        
+        // Rain
+        rain = game.add.group();
+        game.physics.enable(rain, Phaser.Physics.ARCADE);
+        
+        // Adds Rain
+        for (var i = 0; i < 7; i++)
+        {
+            // Adds Raindrop
+            var raindrop = rain.create(i * 50, 0, 'raindrop');
+            
+            // Raindrop falls
+            raindrop.body.gravity.y = 300;
+        }
+        
+        // Music
+        theme = game.add.audio('theme');
+        theme.play();
     }
     
     function update()
