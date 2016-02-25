@@ -16,7 +16,7 @@ window.onload = function() {
     var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
     function preload()
-    {   
+    {
         game.load.image('darkness', 'assets/pics/darkness.jpg');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         
@@ -41,6 +41,9 @@ window.onload = function() {
     
     function create()
     {
+        // Size of World
+        game.world.resize(1600, 900);
+        
         // Background
         background = game.add.image(0, 0, 'darkness');
         
@@ -62,7 +65,7 @@ window.onload = function() {
         raindrop3.body.gravity.y = 500;
         
         // Creates the player
-        player = game.add.sprite(0, game.world.height - 500, 'chara', 1);
+        player = game.add.sprite(0, game.world.height, 'chara', 1);
         
         // Player's Physics
         game.physics.arcade.enable(player);
@@ -76,7 +79,7 @@ window.onload = function() {
         // Keyboard controls
         controls = game.input.keyboard.createCursorKeys();
         
-        //game.camera.follow(player);
+        game.camera.follow(player);
 
         
         // Music
@@ -133,24 +136,25 @@ window.onload = function() {
             game.camera.x +- 4;
             
             lastDirection = 2;
+        }        
+        // Vertical Movements
+        else if (controls.up.isDown)
+            player.body.velocity.y = -150;
+        else if(controls.down.isDown)
+        {
+            player.frame = 1;
+            
+            lastDirection = 3;
         }
         else
         {
             player.animations.stop();
             if (lastDirection == 1)
-            {
                 player.frame = 10;
-            }
             else if (lastDirection == 2)
-            {
                 player.frame = 5;
-            }
-        }
-        
-        // Vertical Movements
-        if (controls.up.isDown)
-        {
-            player.body.velocity.y = -150;
+            else if (lastDirection == 3)
+                player.frame = 1;
         }
     }
 };
