@@ -81,13 +81,11 @@ window.onload = function() {
     
     // Rain Enviorment
     function stormSetup()
-    {
+    {   
         // Clouds
         var clouds = game.add.group();
-        for (var i; i < 4; i++)
-        {
-            var cloud = clouds.create(0, 0, 'cloud');
-        }
+        for (var i = 0; i < 4; i++)
+            var cloud = clouds.create(i * 600, 0, 'cloud');
         
         // Rain
         rain = game.add.group();
@@ -96,40 +94,64 @@ window.onload = function() {
         rain.enableBody = true;
         
         // Raindrops
-        raindrop1 = rain.create(0, 0, 'raindrop');
-        raindrop1.body.gravity.y = 500;
-        raindrop2 = rain.create(320, 0, 'raindrop');
+        var rainY = 218;
+        
+        raindrop1 = rain.create(10, rainY, 'raindrop');
+        raindrop1.body.gravity.y = 1000;
+        raindrop2 = rain.create(320, rainY, 'raindrop');
         raindrop2.body.gravity.y = 1500;
-        raindrop3 = rain.create(640, 0, 'raindrop');
+        raindrop3 = rain.create(640, rainY, 'raindrop');
         raindrop3.body.gravity.y = 3000;
-        raindrop4 = rain.create(960, 0, 'raindrop');
+        raindrop4 = rain.create(960, rainY, 'raindrop');
         raindrop4.body.gravity.y = 3000;
-        raindrop5 = rain.create(1280, 0, 'raindrop');
+        raindrop5 = rain.create(1280, rainY, 'raindrop');
         raindrop5.body.gravity.y = 1500;
-        raindrop6 = rain.create(1600, 0, 'raindrop');
-        raindrop6.body.gravity.y = 500;
+        raindrop6 = rain.create(1590, rainY, 'raindrop');
+        raindrop6.body.gravity.y = 1000;
         
     }
     
     // Rain Effects
     function rainEffects()
     {   
-        var randNum = game.rnd.realInRange(0, 14);       
-        if (raindrop1.y > game.world.centerY)
+        var randNum;
+        var rainY = 218;
+        if (raindrop1.y > (game.world.centerY)/2)
         {
-            raindrop1 = rain.create(randNum * 60, 0, 'raindrop');
-            raindrop1.body.gravity.y = 2000;
+            randNum = game.rnd.realInRange(0, 10); 
+            raindrop1 = rain.create((randNum * 30) + 10, rainY, 'raindrop');
+            raindrop1.body.gravity.y = 1000;
         }
-        if (raindrop2.y > game.world.centerY)
+        if (raindrop2.y > (game.world.centerY)/2)
         {
-            raindrop2 = rain.create(randNum * 60, 0, 'raindrop');
-            raindrop2.body.gravity.y = 1000;
+            randNum = game.rnd.realInRange(0, 10); 
+            raindrop2 = rain.create((randNum * 30) + 300, rainY, 'raindrop');
+            raindrop2.body.gravity.y = 1500;
         }
-        if (raindrop3.y > game.world.centerY)
+        if (raindrop3.y > (game.world.centerY)/2)
         {
-            raindrop3 = rain.create(randNum * 60, 0, 'raindrop');
-            raindrop3.body.gravity.y = 500;
-        } 
+            randNum = game.rnd.realInRange(0, 10); 
+            raindrop3 = rain.create((randNum * 30) + 600, rainY, 'raindrop');
+            raindrop3.body.gravity.y = 3000;
+        }
+        if (raindrop4.y > (game.world.centerY)/2)
+        {
+            randNum = game.rnd.realInRange(0, 10); 
+            raindrop4 = rain.create((randNum * 30) + 900, rainY, 'raindrop');
+            raindrop4.body.gravity.y = 3000;
+        }
+        if (raindrop5.y > (game.world.centerY)/2)
+        {
+            randNum = game.rnd.realInRange(0, 10); 
+            raindrop5 = rain.create((randNum * 30) + 1200, rainY, 'raindrop');
+            raindrop5.body.gravity.y = 1500;
+        if (raindrop6.y > (game.world.centerY)/2)
+        {
+            randNum = game.rnd.realInRange(0, 13); 
+            raindrop6 = rain.create((randNum * 30) + 1500, rainY, 'raindrop');
+            raindrop6.body.gravity.y = 1000;
+        }
+        }
     }
     
     // Player Setup
