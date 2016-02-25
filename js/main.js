@@ -20,9 +20,13 @@ window.onload = function() {
         game.load.image('darkness', 'assets/pics/darkness.jpg');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         
+        game.load.spritesheet('chara', 'assets/sprites/chara.png', 55, 73);
+
+        
         game.load.audio('theme', 'assets/audio/Here We Are.mp3');
     }
     
+    var controls;
     var player;
     var background;
     var rain;
@@ -54,6 +58,24 @@ window.onload = function() {
         raindrop3 = rain.create(420, 0, 'raindrop');
         raindrop3.body.gravity.y = 500;
         
+        // Creates the player
+        player = game.add.sprite(0, game.world.height - 500, 'chara');
+        
+        // Player's Physics
+        game.physics.arcade.enable(player);
+        player.body.collideWorldBounds = true;
+        player.body.gravity.y = 250;
+        
+        // Player's Movements
+        player.animations.add('left', [9, 10, 11, 12]);
+        player.animations.add('right', [5, 6, 7, 8]);
+        
+        // Keyboard controls
+        controls = game.input.keyboard.createCursorKeys();
+        
+        //game.camera.follow(player);
+
+        
         // Music
         theme = game.add.audio('theme');
         theme.play();
@@ -61,9 +83,9 @@ window.onload = function() {
     
     function update()
     {
-        var randNum = game.rnd.realInRange(0, 14);
+        // Rain Effects
         
-        // Adds Rain    
+        var randNum = game.rnd.realInRange(0, 14);       
         if (raindrop1.y > game.world.centerY)
         {
             raindrop1 = rain.create(randNum * 60, 0, 'raindrop');
@@ -78,6 +100,36 @@ window.onload = function() {
         {
             raindrop3 = rain.create(randNum * 60, 0, 'raindrop');
             raindrop3.body.gravity.y = 500;
+        }
+        
+        
+        // Player's Movements
+        
+        player.body.velocity.x = 0;
+        
+        // Horizontal Movements
+        if (controls.left.isDown)
+        {
+            player.body.velocity.x = -150;  
+            player.animations.play('left', 30, true);            
+            game.camera.x -= 4;
+        }
+        else if (controls.right.isDown)
+        {
+            player.body.velocity.x = 150;            
+            player.animations.play('right', 30, true);            
+            game.camera.x +- 4;
+        }
+        else
+        {
+            player.animations.stop();   
+            player.frame = 5;
+        }
+        
+        // Vertical Movements
+        if (controls.up.isDown && player.body.touching.down)
+        {
+            player.body.velocity.y = -150;
         }
     }
 };
