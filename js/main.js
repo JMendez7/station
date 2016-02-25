@@ -20,7 +20,7 @@ window.onload = function() {
         game.load.image('darkness', 'assets/pics/darkness.jpg');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         
-        game.load.spritesheet('chara', 'assets/sprites/chara.png', 55, 73);
+        game.load.spritesheet('chara', 'assets/sprites/chara.png', 56, 75);
 
         
         game.load.audio('theme', 'assets/audio/Here We Are.mp3');
@@ -28,7 +28,10 @@ window.onload = function() {
     
     var controls;
     var player;
+    var lastDirection;
+    
     var background;
+    
     var rain;
     var raindrop1;
     var raindrop2;
@@ -51,7 +54,7 @@ window.onload = function() {
         rain.enableBody = true;
         
         // Raindrop
-        raindrop1 = rain.create(60, 0, 'raindrop');
+        raindrop1 = rain.create(0, 0, 'raindrop');
         raindrop1.body.gravity.y = 2000;
         raindrop2 = rain.create(660, 0, 'raindrop');
         raindrop2.body.gravity.y = 1000;
@@ -59,7 +62,7 @@ window.onload = function() {
         raindrop3.body.gravity.y = 500;
         
         // Creates the player
-        player = game.add.sprite(0, game.world.height - 500, 'chara');
+        player = game.add.sprite(0, game.world.height - 500, 'chara', 1);
         
         // Player's Physics
         game.physics.arcade.enable(player);
@@ -67,8 +70,8 @@ window.onload = function() {
         player.body.gravity.y = 250;
         
         // Player's Movements
-        player.animations.add('left', [9, 10, 11, 12]);
-        player.animations.add('right', [5, 6, 7, 8]);
+        player.animations.add('left', [11, 10, 9, 8]);
+        player.animations.add('right', [4, 5, 6, 7]);
         
         // Keyboard controls
         controls = game.input.keyboard.createCursorKeys();
@@ -82,9 +85,14 @@ window.onload = function() {
     }
     
     function update()
-    {
-        // Rain Effects
-        
+    {   
+        rainEffects();
+        playerMovements();
+    }
+    
+    // Rain Effects
+    function rainEffects()
+    {   
         var randNum = game.rnd.realInRange(0, 14);       
         if (raindrop1.y > game.world.centerY)
         {
@@ -100,34 +108,47 @@ window.onload = function() {
         {
             raindrop3 = rain.create(randNum * 60, 0, 'raindrop');
             raindrop3.body.gravity.y = 500;
-        }
-        
-        
-        // Player's Movements
-        
+        } 
+    }
+    
+    // Player's Movement Control
+    function playerMovements()
+    {   
+        // Initial Velocity
         player.body.velocity.x = 0;
         
         // Horizontal Movements
         if (controls.left.isDown)
         {
-            player.body.velocity.x = -150;  
-            player.animations.play('left', 30, true);            
+            player.body.velocity.x = -200;  
+            player.animations.play('left', 5, true);            
             game.camera.x -= 4;
+            
+            lastDirection = 1;
         }
         else if (controls.right.isDown)
         {
-            player.body.velocity.x = 150;            
-            player.animations.play('right', 30, true);            
+            player.body.velocity.x = 200;            
+            player.animations.play('right', 5, true);            
             game.camera.x +- 4;
+            
+            lastDirection = 2;
         }
         else
         {
-            player.animations.stop();   
-            player.frame = 5;
+            player.animations.stop();
+            if (lastDirection == 1)
+            {
+                player.frame = 10;
+            }
+            else if (lastDirection == 2)
+            {
+                player.frame = 5;
+            }
         }
         
         // Vertical Movements
-        if (controls.up.isDown && player.body.touching.down)
+        if (controls.up.isDown)
         {
             player.body.velocity.y = -150;
         }
