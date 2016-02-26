@@ -1,15 +1,5 @@
-window.onload = function() {
-    // You might want to start with a template that uses GameStates:
-    //     https://github.com/photonstorm/phaser/tree/master/resources/Project%20Templates/Basic
-    
-    // You can copy-and-paste the code from any of the examples at http://examples.phaser.io here.
-    // You will need to change the fourth parameter to "new Phaser.Game()" from
-    // 'phaser-example' to 'game', which is the id of the HTML element where we
-    // want the game to go.
-    // The assets (and code) can be found at: https://github.com/photonstorm/phaser/tree/master/examples/assets
-    // You will need to change the paths you pass to "game.load.image()" or any other
-    // loading functions to reflect where you are putting the assets.
-    // All loading functions will typically all be found inside "preload()".
+window.onload = function()
+{
     
     "use strict";
     
@@ -99,13 +89,13 @@ window.onload = function() {
         raindrop1 = rain.create(10, rainY, 'raindrop');
         raindrop1.body.gravity.y = 1000;
         raindrop2 = rain.create(320, rainY, 'raindrop');
-        raindrop2.body.gravity.y = 1500;
+        raindrop2.body.gravity.y = 1000;
         raindrop3 = rain.create(640, rainY, 'raindrop');
-        raindrop3.body.gravity.y = 3000;
+        raindrop3.body.gravity.y = 1000;
         raindrop4 = rain.create(960, rainY, 'raindrop');
-        raindrop4.body.gravity.y = 3000;
+        raindrop4.body.gravity.y = 1000;
         raindrop5 = rain.create(1280, rainY, 'raindrop');
-        raindrop5.body.gravity.y = 1500;
+        raindrop5.body.gravity.y = 1000;
         raindrop6 = rain.create(1590, rainY, 'raindrop');
         raindrop6.body.gravity.y = 1000;
         
@@ -114,8 +104,9 @@ window.onload = function() {
     // Rain Effects
     function rainEffects()
     {   
-        var randNum;
+        var randNum = 0;
         var rainY = 218;
+        
         if (raindrop1.y > (game.world.centerY)/2)
         {
             randNum = game.rnd.realInRange(0, 10); 
@@ -126,25 +117,25 @@ window.onload = function() {
         {
             randNum = game.rnd.realInRange(0, 10); 
             raindrop2 = rain.create((randNum * 30) + 300, rainY, 'raindrop');
-            raindrop2.body.gravity.y = 1500;
+            raindrop2.body.gravity.y = 1000;
         }
         if (raindrop3.y > (game.world.centerY)/2)
         {
             randNum = game.rnd.realInRange(0, 10); 
             raindrop3 = rain.create((randNum * 30) + 600, rainY, 'raindrop');
-            raindrop3.body.gravity.y = 3000;
+            raindrop3.body.gravity.y = 1000;
         }
         if (raindrop4.y > (game.world.centerY)/2)
         {
             randNum = game.rnd.realInRange(0, 10); 
             raindrop4 = rain.create((randNum * 30) + 900, rainY, 'raindrop');
-            raindrop4.body.gravity.y = 3000;
+            raindrop4.body.gravity.y = 1000;
         }
         if (raindrop5.y > (game.world.centerY)/2)
         {
             randNum = game.rnd.realInRange(0, 10); 
             raindrop5 = rain.create((randNum * 30) + 1200, rainY, 'raindrop');
-            raindrop5.body.gravity.y = 1500;
+            raindrop5.body.gravity.y = 1000;
         if (raindrop6.y > (game.world.centerY)/2)
         {
             randNum = game.rnd.realInRange(0, 13); 
@@ -171,6 +162,7 @@ window.onload = function() {
         
         game.camera.follow(player);
     }
+    
     // Player's Movement Control
     function playerMovements()
     {   
