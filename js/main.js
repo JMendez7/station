@@ -11,6 +11,7 @@ window.onload = function()
         game.load.image('darkness', 'assets/pics/darkness.jpg');
         game.load.image('cloud', 'assets/pics/cloud.png');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
+        game.load.image('door', 'assets/pics/door.jpg');
         
         game.load.spritesheet('chara', 'assets/sprites/chara.png', 56, 75);
 
@@ -49,6 +50,9 @@ window.onload = function()
         
         // Storm Enviorment
         stormSetup();
+        
+        // Door Setup
+        door();
         
         // Player Setup
         playerSetup();        
@@ -143,6 +147,14 @@ window.onload = function()
             raindrop6.body.gravity.y = 1000;
         }
         }
+    }
+    
+    // Door Spawn
+    function door()
+    {
+        // Doors
+        var doors = game.add.group();
+        var door = doors.create(game.world.width - 100, 300, 'door');
     }
     
     // Player Setup
