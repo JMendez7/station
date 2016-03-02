@@ -12,6 +12,7 @@ window.onload = function()
         game.load.image('cloud', 'assets/pics/cloud.png');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         game.load.image('door', 'assets/pics/door.jpg');
+        game.load.image('ground', 'assets/pics/ground.png');
         
         game.load.spritesheet('chara', 'assets/sprites/chara.png', 56, 75);
 
@@ -25,6 +26,8 @@ window.onload = function()
     var lastDirection;
     
     // Enviorment
+    var surface;
+    var surface;
     var rain;
     var raindrop1;
     var raindrop2;
@@ -38,7 +41,7 @@ window.onload = function()
     
     // Creates Game
     function create()
-    {
+    {   
         // Size of World
         game.world.resize(1600, 900);
         
@@ -46,7 +49,10 @@ window.onload = function()
         game.physics.startSystem(Phaser.Physics.ARCADE);
         
         // Background
-        var background = game.add.image(0, 0, 'darkness');
+        var background = game.add.image(0, 0, 'darkness');        
+                
+        // Surface
+        surface()
         
         // Storm Enviorment
         stormSetup();
@@ -68,9 +74,25 @@ window.onload = function()
     
     // Updates Game
     function update()
-    {   
+    {
+        game.physics.arcade.collide(player, surface);
+        
         rainEffects();
+        door();
         playerMovements();
+    }
+    
+    // Surface
+    function surface()
+    {
+        surface = game.add.group();
+        surface.enableBody = true;        
+        
+        var floor;
+        floor = surface.create(0, game.world.height - 100, 'ground');
+        floor.body.immovable = true;
+        floor = surface.create(885, game.world.height - 100, 'ground');
+        floor.body.immovable = true;
     }
     
     // Rain Enviorment
@@ -161,7 +183,7 @@ window.onload = function()
     function playerSetup()
     {
         // Creates the player
-        player = game.add.sprite(0, game.world.height, 'chara', 1);
+        player = game.add.sprite(0, game.world.height - 180, 'chara', 1);
         
         // Player's Physics
         game.physics.arcade.enable(player);
