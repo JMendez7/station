@@ -229,17 +229,6 @@ window.onload = function()
             
             lastDirection = 3;
         }
-        else if (controls.up.isDown)
-        {
-            if (lastDirection == 1)
-                player.frame = 10;
-            else if (lastDirection == 2)
-                player.frame = 5;
-            else if (lastDirection == 3)
-                player.frame = 1;
-            
-            player.body.velocity.y = -150;
-        }
         else
         {
             player.animations.stop();
@@ -249,6 +238,18 @@ window.onload = function()
                 player.frame = 5;
             else if (lastDirection == 3)
                 player.frame = 1;
+        }
+        
+        if (controls.up.isDown && player.body.touching.down)
+        {
+            if (lastDirection == 1)
+                player.frame = 10;
+            else if (lastDirection == 2)
+                player.frame = 5;
+            else if (lastDirection == 3)
+                player.frame = 1;
+            
+            player.body.velocity.y = -300;
         }
     }
 };
