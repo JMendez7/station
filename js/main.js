@@ -13,6 +13,7 @@ window.onload = function()
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         game.load.image('door', 'assets/pics/door.jpg');
         game.load.image('ground', 'assets/pics/ground.png');
+        game.load.image('box', 'assets/pics/box.png');
         
         game.load.spritesheet('chara', 'assets/sprites/chara.png', 56, 75);
 
