@@ -76,9 +76,6 @@ window.onload = function()
         // Player Setup
         playerSetup();        
         
-        // Zombie Setup
-        zombieSetup();
-        
         // Keyboard controls
         controls = game.input.keyboard.createCursorKeys();
 
@@ -277,7 +274,7 @@ window.onload = function()
         // Player's Physics
         game.physics.arcade.enable(zombie);
         zombie.body.collideWorldBounds = true;
-        zombie.body.gravity.y = 0;
+        zombie.body.gravity.y = 250;
         
         // Player's Movements
         zombie.animations.add('left', [1, 2, 3]);
@@ -286,12 +283,18 @@ window.onload = function()
     // Zombie Movement
     function zombieMovements()
     {
-        if (player.x > 1500)
+        if (player.x > 1200 && spawn == 0)
         {
-            zombie.body.velocity.x = 0;
-            zombie.animations.play('left', 5, true);       
+            zombieSetup();
+            spawn = 1;       
         }
-        else
-            zombie.animations.stop();
+        else if (spawn == 1)
+        {
+            if(zombie.body.touching.down)
+            {
+                zombie.body.velocity.x = -200;
+                zombie.animations.play('left', 5, true);
+            }
+        }
     }
 };
