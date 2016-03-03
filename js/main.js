@@ -16,6 +16,7 @@ window.onload = function()
         game.load.image('box', 'assets/pics/box.png');
         
         game.load.spritesheet('chara', 'assets/sprites/chara.png', 56, 75);
+        //game.load.spritesheet('zombie', 'assets/sprites/zombie.png' 134, 154);
 
         
         game.load.audio('theme', 'assets/audio/Here We Are.mp3');
@@ -228,18 +229,7 @@ window.onload = function()
             
             lastDirection = 3;
         }
-                else
-        {
-            player.animations.stop();
-            if (lastDirection == 1)
-                player.frame = 10;
-            else if (lastDirection == 2)
-                player.frame = 5;
-            else if (lastDirection == 3)
-                player.frame = 1;
-        }
-        
-        if (controls.up.isDown && player.body.touching.down)
+        else if (controls.up.isDown)
         {
             if (lastDirection == 1)
                 player.frame = 10;
@@ -248,7 +238,17 @@ window.onload = function()
             else if (lastDirection == 3)
                 player.frame = 1;
             
-            player.body.velocity.y = -300;
+            player.body.velocity.y = -150;
+        }
+        else
+        {
+            player.animations.stop();
+            if (lastDirection == 1)
+                player.frame = 10;
+            else if (lastDirection == 2)
+                player.frame = 5;
+            else if (lastDirection == 3)
+                player.frame = 1;
         }
     }
 };
