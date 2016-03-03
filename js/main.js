@@ -35,6 +35,9 @@ window.onload = function()
     // Zombie Attributes
     var zombie;
     
+    // Zombie/Player Reltionships
+    var spawn = 0;
+    
     // Enviorment
     var surface;
     var surface;
@@ -269,22 +272,26 @@ window.onload = function()
     function zombieSetup()
     {
         // Creates the player
-        zombie = game.add.sprite(1800, game.world.height - 201, 'zombie', 15);
+        zombie = game.add.sprite(1600, game.world.height - 550, 'zombie', 15);
         
         // Player's Physics
         game.physics.arcade.enable(zombie);
         zombie.body.collideWorldBounds = true;
-        zombie.body.gravity.y = 250;
+        zombie.body.gravity.y = 0;
         
         // Player's Movements
-        zombie.animations.add('left', [1, 3]);
-        zombie.animations.add('right', [18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
+        zombie.animations.add('left', [1, 2, 3]);
     }
     
     // Zombie Movement
     function zombieMovements()
     {
-        zombie.body.velocity.x = -200;
-        zombie.animations.play('left', 5, true);
+        if (player.x > 1500)
+        {
+            zombie.body.velocity.x = 0;
+            zombie.animations.play('left', 5, true);       
+        }
+        else
+            zombie.animations.stop();
     }
 };
