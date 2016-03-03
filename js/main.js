@@ -91,6 +91,7 @@ window.onload = function()
     {
         game.physics.arcade.collide(player, surface);
         game.physics.arcade.collide(zombie, surface);
+        game.physics.arcade.collide(player, zombie);
         
         rainEffects();
         playerMovements();
@@ -262,7 +263,7 @@ window.onload = function()
             else if (lastDirection == 3)
                 player.frame = 1;
             
-            player.body.velocity.y = -300;
+            player.body.velocity.y = -350;
         }
     }
     
@@ -287,7 +288,7 @@ window.onload = function()
         if (player.x > 1200 && spawn == 0)
         {
             zombieSetup();
-            var text = "Let's Go!";
+            var text = "Die!";
             var style = { font: "55px Arial", fill: "#16882c", align: "center" };
             
             zombieText = game.add.text(1150, 300, text, style);
@@ -297,7 +298,7 @@ window.onload = function()
         {
             if(zombie.body.touching.down)
             {
-                zombie.body.velocity.x = -200;
+                zombie.body.velocity.x = -150;
                 zombie.animations.play('left', 5, true);
                 
                 zombieText.destroy();
