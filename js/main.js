@@ -34,6 +34,7 @@ window.onload = function()
     
     // Zombie Attributes
     var zombie;
+    var zombieText;
     
     // Zombie/Player Reltionships
     var spawn = 0;
@@ -286,6 +287,10 @@ window.onload = function()
         if (player.x > 1200 && spawn == 0)
         {
             zombieSetup();
+            var text = "Let's Go!";
+            var style = { font: "55px Arial", fill: "#16882c", align: "center" };
+            
+            zombieText = game.add.text(1150, 300, text, style);
             spawn = 1;       
         }
         else if (spawn == 1)
@@ -294,6 +299,8 @@ window.onload = function()
             {
                 zombie.body.velocity.x = -200;
                 zombie.animations.play('left', 5, true);
+                
+                zombieText.destroy();
             }
         }
     }
