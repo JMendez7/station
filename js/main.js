@@ -277,14 +277,14 @@ window.onload = function()
         zombie.body.gravity.y = 250;
         
         // Player's Movements
-        zombie.animations.add('left', [11, 10, 9, 8]);
-        zombie.animations.add('right', [4, 5, 6, 7]);
+        zombie.animations.add('left', [1, 3]);
+        zombie.animations.add('right', [18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
     }
     
     // Zombie Movement
     function zombieMovements()
     {
         zombie.body.velocity.x = -200;
-        zombie.animations.play('left');
+        zombie.animations.play('left', 5, true);
     }
 };
