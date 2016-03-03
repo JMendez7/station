@@ -8,17 +8,22 @@ window.onload = function()
     // Load Resources
     function preload()
     {
+        // Background
         game.load.image('darkness', 'assets/pics/darkness.jpg');
+        
+        // Enviorment
         game.load.image('cloud', 'assets/pics/cloud.png');
         game.load.image('raindrop', 'assets/pics/raindrop.png');
         game.load.image('door', 'assets/pics/door.jpg');
+        
+        // Characters
         game.load.image('ground', 'assets/pics/ground.png');
         game.load.image('box', 'assets/pics/box.png');
         
         game.load.spritesheet('chara', 'assets/sprites/chara.png', 56, 75);
-        //game.load.spritesheet('zombie', 'assets/sprites/zombie.png' 134, 154);
+        game.load.spritesheet('zombie', 'assets/sprites/zombie.png', 90, 105, 5);
 
-        
+        // Music
         game.load.audio('theme', 'assets/audio/Here We Are.mp3');
     }
     
@@ -26,6 +31,9 @@ window.onload = function()
     var controls;
     var player;
     var lastDirection;
+    
+    // Zombie Attributes
+    var zombie;
     
     // Enviorment
     var surface;
@@ -65,6 +73,9 @@ window.onload = function()
         // Player Setup
         playerSetup();        
         
+        // Zombie Setup
+        zombieSetup();
+        
         // Keyboard controls
         controls = game.input.keyboard.createCursorKeys();
 
@@ -78,10 +89,11 @@ window.onload = function()
     function update()
     {
         game.physics.arcade.collide(player, surface);
+        game.physics.arcade.collide(zombie, surface);
         
         rainEffects();
-        door();
         playerMovements();
+        zombieMovements();
     }
     
     // Surface
@@ -185,7 +197,7 @@ window.onload = function()
     function playerSetup()
     {
         // Creates the player
-        player = game.add.sprite(0, game.world.height - 180, 'chara', 1);
+        player = game.add.sprite(0, game.world.height - 171, 'chara', 1);
         
         // Player's Physics
         game.physics.arcade.enable(player);
@@ -251,5 +263,28 @@ window.onload = function()
             
             player.body.velocity.y = -300;
         }
+    }
+    
+    // Zombie Setup
+    function zombieSetup()
+    {
+        // Creates the player
+        zombie = game.add.sprite(1800, game.world.height - 201, 'zombie', 15);
+        
+        // Player's Physics
+        game.physics.arcade.enable(zombie);
+        zombie.body.collideWorldBounds = true;
+        zombie.body.gravity.y = 250;
+        
+        // Player's Movements
+        zombie.animations.add('left', [11, 10, 9, 8]);
+        zombie.animations.add('right', [4, 5, 6, 7]);
+    }
+    
+    // Zombie Movement
+    function zombieMovements()
+    {
+        zombie.body.velocity.x = -200;
+        zombie.animations.play('left');
     }
 };
