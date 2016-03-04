@@ -25,6 +25,7 @@ window.onload = function()
 
         // Music
         game.load.audio('theme', 'assets/audio/Here We Are.mp3');
+        game.load.audio('gotcha', 'assets/audio/Nyeh Heh Heh!.mp3');
     }
     
     // Player Attributes
@@ -55,7 +56,8 @@ window.onload = function()
     var raindrop6;
     
     // Sound
-    var theme
+    var theme;
+    var gotcha;
     
     // Creates Game
     function create()
@@ -317,7 +319,7 @@ window.onload = function()
                 zombie.animations.play('left', 5, true);
             }
             // Disables wall boundaries once the player and zombie are close to the begging of game.
-            else if(zombie.x < 0 && player.x > 25 && player.x < 200)
+            else if(zombie.x < 0 && player.x > 10 && player.x < 100)
             {
                 player.body.collideWorldBounds = false;
                 spawn = 2;
@@ -339,6 +341,11 @@ window.onload = function()
             boxSpawn();
             player.body.collideWorldBounds = true;
             boxDown = 1;
+            
+            theme.pause();
+            
+            gotcha = game.add.audio('gotcha');
+            gotcha.play();
         }
         else if(spawn == 2 && boxDown == 1)
         {
@@ -347,6 +354,9 @@ window.onload = function()
                 box.body.collideWorldBounds = false;
                 spawn = 0;
                 boxDown = 0;
+                
+                gotcha.destroy();
+                theme.restart();
             }
         }
         // Resets Everything.
@@ -354,6 +364,7 @@ window.onload = function()
         {
             zombie.kill();
             zombieText.destroy();
+            theme.restart();
             player.x = 0;
             player.y = game.world.height - 185;
             spawn = 0;
@@ -381,6 +392,12 @@ window.onload = function()
             var text = "You did it!";
             var style = { font: "55px Arial", fill: "#16882c", align: "center" };
             zombieText = game.add.text(1150, 300, text, style);
+            
+            text = "Die. Get it?";
+            zombieText = game.add.text(1150, 400, text, style);
+            
+            text = "I'll see myself out.";
+            zombieText = game.add.text(1150, 500, text, style);
             
             player.kill();
         }
