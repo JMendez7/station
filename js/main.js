@@ -326,7 +326,7 @@ window.onload = function()
             }
         }
         // Enables Walls if player decides to not follow zombie.
-        if (player.x > 200 && spawn == 2 && boxDown == 0)
+        if (player.x > 100 && spawn == 2 && boxDown == 0)
         {
             player.body.collideWorldBounds = true;
             zombie.kill();
