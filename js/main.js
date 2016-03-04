@@ -331,7 +331,7 @@ window.onload = function()
             spawn = 2;
         }
         // Teleports player and spawns dice if he decides to follow the zombie.
-        else if(player.x < 0 && boxDown == 0 & spawn == 2)
+        else if(player.x < 0 && boxDown == 0 && spawn == 2)
         {
             player.x = 585;
             player.y = 0;
