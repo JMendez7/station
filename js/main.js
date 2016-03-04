@@ -39,6 +39,10 @@ window.onload = function()
     // Zombie/Player Reltionships
     var spawn = 0;
     
+    // Dice
+    var box;
+    var boxDown = 0;
+    
     // Enviorment
     var surface;
     var surface;
@@ -90,8 +94,14 @@ window.onload = function()
     function update()
     {
         game.physics.arcade.collide(player, surface);
+        
+        // Zombie Interactions
         game.physics.arcade.collide(zombie, surface);
         game.physics.arcade.collide(player, zombie);
+        
+        // Box Interactions
+        game.physics.arcade.collide(box, surface);
+        game.physics.arcade.collide(player, box);
         
         rainEffects();
         playerMovements();
@@ -271,11 +281,10 @@ window.onload = function()
     function zombieSetup()
     {
         // Creates the player
-        zombie = game.add.sprite(1600, game.world.height - 550, 'zombie', 15);
+        zombie = game.add.sprite(1500, game.world.height - 550, 'zombie', 15);
         
         // Player's Physics
         game.physics.arcade.enable(zombie);
-        zombie.body.collideWorldBounds = true;
         zombie.body.gravity.y = 250;
         
         // Player's Movements
@@ -285,24 +294,61 @@ window.onload = function()
     // Zombie Movement
     function zombieMovements()
     {
+        // Spawn Zombie
         if (player.x > 1200 && spawn == 0)
         {
             zombieSetup();
+            
+            // Die Text
             var text = "Die!";
             var style = { font: "55px Arial", fill: "#16882c", align: "center" };
-            
             zombieText = game.add.text(1150, 300, text, style);
-            spawn = 1;       
+            
+            spawn = 1;
         }
         else if (spawn == 1)
         {
+            // Zombie walks after touching the ground.
             if(zombie.body.touching.down)
-            {
+            {                
+                zombieText.destroy();
+                
                 zombie.body.velocity.x = -150;
                 zombie.animations.play('left', 5, true);
-                
-                zombieText.destroy();
+            }
+            // Disables wall boundaries once the player and zombie are close to the begging of game.
+            else if(player.x > zombie.x && player.x < 200)
+            {
+                player.body.collideWorldBounds = false;
+                spawn = 2;
             }
         }
+        // Enables Walls if player decides to not follow zombie.
+        if (player.x > 200 && spawn == 2 && boxDown == 0)
+        {
+            player.body.collideWorldBounds = true;
+            zombie.kill();
+            spawn = 2;
+        }
+        // Teleports player and spawns dice if he decides to follow the zombie.
+        else if(player.x < 0 && boxDown == 0)
+        {
+            player.x = 585;
+            player.y = 0;
+            
+            boxSpawn();
+            boxDown = 1;
+        }
+    }
+    
+    function boxSpawn()
+    {
+        // Creates the box
+        box = game.add.sprite(585, 110, 'box');
+        
+        // Box's Physics
+        game.physics.arcade.enable(box);
+        box.body.collideWorldBounds = true;
+        box.body.gravity.y = 100;
     }
 };
