@@ -316,7 +316,7 @@ window.onload = function()
                 zombie.animations.play('left', 5, true);
             }
             // Disables wall boundaries once the player and zombie are close to the begging of game.
-            else if(player.x > 25 && player.x < 200)
+            else if(zombie.x < 0 && player.x > 25 && player.x < 200)
             {
                 player.body.collideWorldBounds = false;
                 spawn = 2;
@@ -330,7 +330,7 @@ window.onload = function()
             spawn = 2;
         }
         // Teleports player and spawns dice if he decides to follow the zombie.
-        else if(zombie.x < 0 && player.x > 25 && player.x < 200 && boxDown == 0)
+        else if(player.x < 0 && boxDown == 0)
         {
             player.x = 585;
             player.y = 0;
