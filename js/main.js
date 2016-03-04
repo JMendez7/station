@@ -330,7 +330,7 @@ window.onload = function()
             spawn = 2;
         }
         // Teleports player and spawns dice if he decides to follow the zombie.
-        else if(player.x < 0 && boxDown == 0)
+        else if(player.x < 0 && boxDown == 0 & spawn == 2)
         {
             player.x = 585;
             player.y = 0;
@@ -343,6 +343,7 @@ window.onload = function()
         else if(game.physics.arcade.collide(player, zombie))
         {
             zombie.kill();
+            zombieText.destroy();
             player.x = 0;
             player.y = game.world.height - 185;
             spawn = 0;
