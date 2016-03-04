@@ -105,6 +105,7 @@ window.onload = function()
         rainEffects();
         playerMovements();
         zombieMovements();
+        escape();
     }
     
     // Surface
@@ -339,6 +340,15 @@ window.onload = function()
             player.body.collideWorldBounds = true;
             boxDown = 1;
         }
+        else if(spawn == 2 && boxDown == 1)
+        {
+            if(box.x < 200)
+            {
+                box.body.collideWorldBounds = false;
+                spawn = 0;
+                boxDown = 0;
+            }
+        }
         // Resets Everything.
         else if(game.physics.arcade.collide(player, zombie))
         {
@@ -361,5 +371,18 @@ window.onload = function()
         game.physics.arcade.enable(box);
         box.body.collideWorldBounds = true;
         box.body.gravity.y = 100;
+    }
+    
+    // Escpae
+    function escape()
+    {
+        if(player.x > 1500 && player.y < 400 && box.body.touching.down)
+        {
+            var text = "You did it!";
+            var style = { font: "55px Arial", fill: "#16882c", align: "center" };
+            zombieText = game.add.text(1150, 300, text, style);
+            
+            player.kill();
+        }
     }
 };
