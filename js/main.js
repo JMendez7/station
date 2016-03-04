@@ -337,6 +337,7 @@ window.onload = function()
             player.y = 0;
             
             boxSpawn();
+            player.body.collideWorldBounds = true;
             boxDown = 1;
         }
     }
